@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代码注释智能生成与优化助手</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- highlight.js CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
+</head>
+<body>
+    <!-- 顶部标题栏 -->
+    <header class="header">
+        <h1>&#x1F4DD; 代码注释智能生成与优化助手</h1>
+        <span class="subtitle">上传 Python / C++ 代码，自动生成高质量注释</span>
+    </header>
+
+    <!-- 主体：双栏布局 -->
+    <main class="main-container">
+        <!-- 左侧：上传 + 文件列表 -->
+        <aside class="sidebar">
+            <!-- 上传区域 -->
+            <section class="upload-section">
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">&#x1F4C4;</div>
+                    <p class="upload-text">拖拽代码文件到此处</p>
+                    <p class="upload-hint">或 <span class="upload-link">点击选择文件</span></p>
+                    <p class="upload-types">支持 .py / .cpp 文件，最大 5MB</p>
+                    <input type="file" id="fileInput" accept=".py,.cpp,.cc,.cxx,.hpp" multiple hidden>
+                </div>
+            </section>
+
+            <!-- 文件列表 -->
+            <section class="file-list-section">
+                <div class="file-list-header">
+                    <h3>文件列表 <span id="fileCount" class="badge">0</span></h3>
+                    <div class="file-list-actions">
+                        <button class="btn btn-primary btn-sm" id="btnAnalyzeAll" disabled>全部分析</button>
+                        <button class="btn btn-outline btn-sm" id="btnClearAll">清空</button>
+                    </div>
+                </div>
+                <div class="file-list" id="fileList">
+                    <div class="empty-state">暂无文件，请上传代码</div>
+                </div>
+            </section>
+        </aside>
+
+        <!-- 右侧：结果展示 -->
+        <section class="result-section" id="resultSection">
+            <div class="result-placeholder" id="resultPlaceholder">
+                <div class="placeholder-icon">&#x1F50D;</div>
+                <p>上传代码并点击分析后，结果将在此展示</p>
+                <p class="hint">支持 Python AST 分析 + DeepSeek AI 注释</p>
+            </div>
+
+            <!-- 结果内容区（分析完成后显示） -->
+            <div class="result-content" id="resultContent" style="display:none;">
+                <div class="result-header">
+                    <h3 id="resultFileName">-</h3>
+                    <span class="result-lang" id="resultLang"></span>
+                    <div class="result-actions">
+                        <button class="btn btn-outline btn-sm" id="btnDownloadAST">下载 AST 版本</button>
+                        <button class="btn btn-primary btn-sm" id="btnDownloadLLM">下载 LLM 版本</button>
+                    </div>
+                </div>
+
+                <!-- 标签切换：AST / LLM -->
+                <div class="tabs">
+                    <button class="tab active" data-tab="ast">AST 结构分析</button>
+                    <button class="tab" data-tab="llm">LLM 语义注释</button>
+                </div>
+
+                <div class="tab-content active" id="tabAST">
+                    <div class="code-viewer">
+                        <div class="code-meta">AST 分析状态：<span id="astStatus">-</span></div>
+                        <pre><code id="astCode" class="language-python"></code></pre>
+                    </div>
+                </div>
+                <div class="tab-content" id="tabLLM">
+                    <div class="code-viewer">
+                        <div class="code-meta">LLM 分析状态：<span id="llmStatus">-</span></div>
+                        <pre><code id="llmCode" class="language-python"></code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast 通知 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

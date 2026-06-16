@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "Bash(Get-ChildItem -Path \"D:\\\\code\\\\ai agent\" -Recurse -File)",
+      "Bash(Select-Object FullName, Length, LastWriteTime)",
+      "Bash(Format-Table -AutoSize)",
+      "Bash(Get-ChildItem -Path \"D:\\\\code\\\\ai agent\" -Depth 2 -Exclude node_modules,.git,__pycache__,.venv,venv,dist,build,.next,coverage)",
+      "Bash(Select-Object Name, FullName, PSIsContainer, Length)",
+      "Bash(Get-ChildItem -Path \"D:\\\\code\\\\ai agent\" -Depth 2)",
+      "Bash(Select-Object Mode, Name)"
+    ]
+  }
+}

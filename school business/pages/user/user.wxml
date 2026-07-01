@@ -1,0 +1,36 @@
+<view class="page">
+  <view class="login-prompt" wx:if="{{!isLogin}}" bindtap="login">
+    <image class="default-avatar" src="/images/default-avatar.png" mode="aspectFill" />
+    <text class="login-text">点击微信一键登录</text>
+    <text class="login-desc">登录后可发布商品和聊天</text>
+  </view>
+  <view class="user-header" wx:else>
+    <image class="avatar" src="{{userInfo.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" bindtap="chooseAvatar" />
+    <view class="user-meta">
+      <text class="nickname">{{userInfo.nickname || '用户'}}</text>
+      <view class="info-row">
+        <text class="info-label" wx:if="{{userInfo.school}}">{{userInfo.school}}</text>
+        <text class="info-label" wx:if="{{userInfo.campus}}">· {{userInfo.campus}}</text>
+      </view>
+      <text class="credit">信用分：{{userInfo.creditScore || 100}}</text>
+    </view>
+    <text class="edit-icon" bindtap="goPage" data-page="/pages/user/edit">编辑 ›</text>
+  </view>
+  <view class="menu-list">
+    <view class="menu-item" bindtap="goPage" data-page="/pages/my-goods/my-goods">
+      <text>我的发布</text>
+      <text class="arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goPage" data-page="/pages/favorite/favorite">
+      <text>我的收藏</text>
+      <text class="arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="goPage" data-page="/pages/history/history">
+      <text>浏览记录</text>
+      <text class="arrow">›</text>
+    </view>
+  </view>
+  <view class="logout-btn" wx:if="{{isLogin}}" bindtap="logout">
+    <text>退出登录</text>
+  </view>
+</view>

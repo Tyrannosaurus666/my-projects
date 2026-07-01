@@ -1,0 +1,46 @@
+.page {
+  min-height: 100vh;
+  padding: 20rpx;
+}
+.form {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+.form-section {
+  margin-bottom: 30rpx;
+}
+.section-label {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 16rpx;
+}
+.stars {
+  display: flex;
+  gap: 16rpx;
+}
+.star {
+  font-size: 60rpx;
+  color: #ddd;
+}
+.star.active {
+  color: #ffb400;
+}
+.form-textarea {
+  width: 100%;
+  height: 200rpx;
+  border: 2rpx solid #eee;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+}
+.submit-btn {
+  margin-top: 40rpx;
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 32rpx;
+  border-radius: 44rpx;
+}

@@ -1,0 +1,67 @@
+<view class="page">
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <block wx:else>
+    <view class="swiper-wrap">
+      <swiper class="image-swiper" indicator-dots autoplay interval="3000" circular>
+        <swiper-item wx:for="{{goods.images}}" wx:key="*this">
+          <image src="{{item}}" mode="aspectFill" />
+        </swiper-item>
+      </swiper>
+      <view class="sold-tag" wx:if="{{goods.status === 2}}">已售出</view>
+      <view class="off-tag" wx:elif="{{goods.status === 3}}">已下架</view>
+    </view>
+    <view class="goods-info">
+      <view class="price-row">
+        <text class="price">¥{{goods.price}}</text>
+        <text class="original-price" wx:if="{{goods.originalPrice > 0}}">原价 ¥{{goods.originalPrice}}</text>
+      </view>
+      <text class="title">{{goods.title}}</text>
+      <view class="tags">
+        <text class="tag" wx:if="{{goods.condition}}">
+          {{goods.condition === 1 ? '全新' : goods.condition === 2 ? '几乎全新' : goods.condition === 3 ? '良好' : '一般'}}
+        </text>
+        <text class="tag" wx:if="{{goods.campus}}">{{goods.campus}}</text>
+        <text class="tag">浏览 {{goods.viewCount || 0}}</text>
+      </view>
+      <text class="desc">{{goods.description}}</text>
+    </view>
+    <view class="seller-card" wx:if="{{!isMyGoods && goods.status === 1}}" bindtap="contactSeller">
+      <image class="seller-avatar" src="{{seller.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" />
+      <view class="seller-meta">
+        <text class="seller-name">{{seller.nickname || '用户'}}</text>
+        <text class="seller-info">{{seller.school || ''}} · 信用分 {{seller.creditScore || 100}}</text>
+      </view>
+      <text class="contact-hint">联系卖家 ›</text>
+    </view>
+    <view class="seller-card-simple" wx:if="{{isMyGoods}}">
+      <image class="seller-avatar" src="{{seller.avatarUrl || '/images/default-avatar.png'}}" mode="aspectFill" />
+      <view class="seller-meta">
+        <text class="seller-name">我发布的商品</text>
+      </view>
+    </view>
+    <view class="seller-actions" wx:if="{{isMyGoods && goods.status === 1}}">
+      <view class="s-action" bindtap="markAsSold">标记已售</view>
+      <view class="s-action" bindtap="updateStatus" data-status="3">下架</view>
+    </view>
+    <view class="seller-actions" wx:elif="{{isMyGoods && goods.status === 3}}">
+      <view class="s-action" bindtap="updateStatus" data-status="1">重新上架</view>
+    </view>
+    <view class="seller-actions" wx:elif="{{isMyGoods && goods.status === 2}}">
+      <view class="s-action" bindtap="goReview">查看评价</view>
+    </view>
+    <!-- 非卖家操作栏 -->
+    <view class="action-bar" wx:if="{{!isMyGoods && goods.status === 1}}">
+      <view class="action favorite {{isFavorite ? 'active' : ''}}" bindtap="toggleFavorite">
+        <text>{{isFavorite ? '❤️' : '🤍'}} {{isFavorite ? '已收藏' : '收藏'}}</text>
+      </view>
+      <view class="action contact" bindtap="contactSeller">
+        <text>💬 我想要</text>
+      </view>
+    </view>
+    <view class="report-bar" wx:if="{{!isMyGoods}}" bindtap="reportGoods">
+      <text>举报</text>
+    </view>
+  </block>
+</view>

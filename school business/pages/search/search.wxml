@@ -1,0 +1,76 @@
+<view class="page">
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text class="s-icon">🔍</text>
+      <input class="search-input" placeholder="搜索商品名称" value="{{keyword}}" bindinput="onKeywordInput"
+        confirm-type="search" bindconfirm="onSearch" />
+      <text class="clear-btn" wx:if="{{keyword}}" bindtap="clearSearch">×</text>
+    </view>
+    <text class="search-btn" bindtap="onSearch">搜索</text>
+  </view>
+  <view class="sort-bar">
+    <view class="sort-item {{sort === 'time' ? 'active' : ''}}" bindtap="onSortChange" data-sort="time">最新</view>
+    <view class="sort-item {{sort === 'price_asc' ? 'active' : ''}}" bindtap="onSortChange" data-sort="price_asc">价格↑</view>
+    <view class="sort-item {{sort === 'price_desc' ? 'active' : ''}}" bindtap="onSortChange" data-sort="price_desc">价格↓</view>
+    <view class="filter-btn" bindtap="toggleFilter">{{showFilter ? '收起筛选 ▲' : '筛选 ▼'}}</view>
+  </view>
+  <view class="filter-panel" wx:if="{{showFilter}}">
+    <view class="filter-section">
+      <text class="filter-label">分类</text>
+      <scroll-view class="filter-tags" scroll-x show-scrollbar="{{false}}">
+        <view class="filter-tag {{!categoryId ? 'active' : ''}}" bindtap="onCategorySelect" data-id="" data-name="全部分类">全部分类</view>
+        <view class="filter-tag {{categoryId === item._id ? 'active' : ''}}" wx:for="{{categories}}" wx:key="_id"
+          bindtap="onCategorySelect" data-id="{{item._id}}" data-name="{{item.name}}">{{item.name}}</view>
+      </scroll-view>
+    </view>
+    <view class="filter-section">
+      <text class="filter-label">价格区间</text>
+      <view class="price-range">
+        <input class="price-input" placeholder="最低价" type="digit" value="{{priceMin}}" bindinput="onPriceMinInput" />
+        <text class="price-sep">—</text>
+        <input class="price-input" placeholder="最高价" type="digit" value="{{priceMax}}" bindinput="onPriceMaxInput" />
+      </view>
+    </view>
+    <view class="filter-section">
+      <text class="filter-label">校区</text>
+      <input class="filter-input" placeholder="筛选校区" value="{{campus}}" bindinput="onCampusInput" />
+    </view>
+    <view class="filter-actions">
+      <view class="filter-reset" bindtap="resetFilter">重置</view>
+      <view class="filter-apply" bindtap="applyFilter">确定</view>
+    </view>
+  </view>
+  <!-- 搜索历史 -->
+  <view class="history-section" wx:if="{{histories.length > 0 && results.length === 0 && !loading}}">
+    <view class="history-header">
+      <text class="history-title">搜索历史</text>
+      <text class="history-clear" bindtap="clearHistories">清空</text>
+    </view>
+    <view class="history-tags">
+      <text class="history-tag" wx:for="{{histories}}" wx:key="*this" bindtap="onHistoryTap" data-keyword="{{item}}">{{item}}</text>
+    </view>
+  </view>
+  <view class="loading" wx:if="{{loading}}">
+    <text>搜索中...</text>
+  </view>
+  <view class="results" wx:else>
+    <view class="result-count" wx:if="{{results.length > 0}}">共找到 {{results.length}} 件商品</view>
+    <view class="goods-item" wx:for="{{results}}" wx:key="_id"
+      bindtap="goDetail" data-id="{{item._id}}">
+      <image wx:if="{{item.images && item.images[0]}}" class="goods-image" src="{{item.images[0]}}" mode="aspectFill" lazy-load />
+      <view wx:else class="goods-image placehold" />
+      <view class="goods-info">
+        <text class="goods-title">{{item.title}}</text>
+        <text class="goods-price">¥{{item.price}}</text>
+        <view class="goods-tags">
+          <text class="goods-tag" wx:if="{{item.campus}}">{{item.campus}}</text>
+          <text class="goods-tag" wx:if="{{item.condition}}">{{item.condition === 1 ? '全新' : item.condition === 2 ? '几乎全新' : item.condition === 3 ? '良好' : '一般'}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{results.length === 0 && !loading}}">
+      <text>没有找到相关商品</text>
+      <text class="empty-hint">试试其他关键词或筛选条件</text>
+    </view>
+  </view>
+</view>

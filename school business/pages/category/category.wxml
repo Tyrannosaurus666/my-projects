@@ -1,0 +1,13 @@
+<view class="page">
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="category-grid" wx:else>
+    <view class="category-item" wx:for="{{categories}}" wx:key="_id"
+      bindtap="goCategory" data-id="{{item._id}}" data-name="{{item.name}}">
+      <image wx:if="{{item.icon}}" class="category-icon" src="{{item.icon}}" mode="aspectFit" />
+      <view wx:else class="category-icon-placehold">{{item.name.slice(0,1)}}</view>
+      <text class="category-name">{{item.name}}</text>
+    </view>
+  </view>
+</view>

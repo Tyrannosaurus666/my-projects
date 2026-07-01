@@ -1,0 +1,26 @@
+<view class="page">
+  <scroll-view class="message-list" scroll-y scroll-into-view="{{scrollTop}}" scroll-with-animation>
+    <view class="goods-card" wx:if="{{goodsInfo}}" data-id="{{goodsInfo._id}}">
+      <image wx:if="{{goodsInfo.images && goodsInfo.images[0]}}" class="card-image" src="{{goodsInfo.images[0]}}" mode="aspectFill" />
+      <view wx:else class="card-image placehold" />
+      <view class="card-info">
+        <text class="card-title">{{goodsInfo.title}}</text>
+        <text class="card-price">¥{{goodsInfo.price}}</text>
+      </view>
+    </view>
+    <view class="message-item {{item.fromId === myId ? 'self' : 'other'}}"
+      wx:for="{{messages}}" wx:key="_id" id="msg-{{item._id || index}}">
+      <block wx:if="{{item.type === 2}}">
+        <image class="msg-image" src="{{item.content}}" mode="aspectFill"
+          bindtap="previewImage" data-src="{{item.content}}" />
+      </block>
+      <view class="bubble" wx:else>{{item.content}}</view>
+    </view>
+  </scroll-view>
+  <view class="input-bar">
+    <view class="img-btn" bindtap="chooseImage">📷</view>
+    <input class="msg-input" value="{{inputValue}}" bindinput="onInput"
+      placeholder="输入消息..." confirm-type="send" bindconfirm="sendMessage" />
+    <button class="send-btn" size="mini" bindtap="sendMessage">发送</button>
+  </view>
+</view>

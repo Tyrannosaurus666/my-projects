@@ -1,0 +1,39 @@
+<view class="page">
+  <view class="tabs">
+    <view class="tab {{tab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">全部</view>
+    <view class="tab {{tab === '1' ? 'active' : ''}}" bindtap="switchTab" data-tab="1">在售</view>
+    <view class="tab {{tab === '2' ? 'active' : ''}}" bindtap="switchTab" data-tab="2">已售</view>
+    <view class="tab {{tab === '3' ? 'active' : ''}}" bindtap="switchTab" data-tab="3">下架</view>
+  </view>
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="goods-list" wx:else>
+    <view class="goods-item" wx:for="{{filteredList}}" wx:key="_id">
+      <view class="goods-main" bindtap="goDetail" data-id="{{item._id}}">
+        <image wx:if="{{item.images && item.images[0]}}" class="goods-image" src="{{item.images[0]}}" mode="aspectFill" />
+        <view wx:else class="goods-image placehold" />
+        <view class="goods-info">
+          <text class="goods-title">{{item.title}}</text>
+          <text class="goods-price">¥{{item.price}}</text>
+          <text class="goods-status status-{{item.status}}">
+            {{item.status === 1 ? '在售' : item.status === 2 ? '已售出' : '已下架'}}
+          </text>
+        </view>
+      </view>
+      <view class="goods-actions" wx:if="{{item.status === 1}}">
+        <view class="action-btn sold" bindtap="markAsSold" data-id="{{item._id}}">标记已售</view>
+        <view class="action-btn off" bindtap="updateStatus" data-id="{{item._id}}" data-status="3">下架</view>
+      </view>
+      <view class="goods-actions" wx:elif="{{item.status === 3}}">
+        <view class="action-btn relist" bindtap="updateStatus" data-id="{{item._id}}" data-status="1">重新上架</view>
+      </view>
+      <view class="goods-actions" wx:elif="{{item.status === 2}}">
+        <view class="action-btn review" bindtap="goDetail" data-id="{{item._id}}">查看评价</view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{filteredList.length === 0}}">
+      <text>暂无商品</text>
+    </view>
+  </view>
+</view>

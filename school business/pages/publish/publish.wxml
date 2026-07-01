@@ -1,0 +1,61 @@
+<view class="page">
+  <view class="form">
+    <view class="form-section">
+      <text class="section-label required">商品图片</text>
+      <view class="image-list">
+        <view class="image-item" wx:for="{{images}}" wx:key="*this">
+          <image src="{{item}}" mode="aspectFill" />
+          <text class="remove-btn" bindtap="removeImage" data-index="{{index}}">×</text>
+        </view>
+        <view class="image-upload" wx:if="{{images.length < 9}}" bindtap="chooseImage">
+          <text class="upload-icon">+</text>
+          <text class="upload-hint">{{images.length}}/9</text>
+        </view>
+      </view>
+    </view>
+    <view class="form-section">
+      <text class="section-label required">标题</text>
+      <input class="form-input" placeholder="请输入商品标题（最多50字）" value="{{title}}" bindinput="onTitleInput" maxlength="50" />
+    </view>
+    <view class="form-section">
+      <text class="section-label required">描述</text>
+      <textarea class="form-textarea" placeholder="描述商品的具体情况、使用时长、转让原因等" value="{{description}}" bindinput="onDescInput" maxlength="1000" />
+      <text class="char-count">{{description.length}}/1000</text>
+    </view>
+    <view class="form-section form-row">
+      <view class="form-half">
+        <text class="section-label required">售价</text>
+        <view class="price-input">
+          <text class="price-sign">¥</text>
+          <input class="form-input" placeholder="0.00" type="digit" value="{{price}}" bindinput="onPriceInput" />
+        </view>
+      </view>
+      <view class="form-half">
+        <text class="section-label">原价</text>
+        <view class="price-input">
+          <text class="price-sign">¥</text>
+          <input class="form-input" placeholder="0.00" type="digit" value="{{originalPrice}}" bindinput="onOriginalPriceInput" />
+        </view>
+      </view>
+    </view>
+    <view class="form-section">
+      <text class="section-label">分类</text>
+      <picker mode="selector" range="{{categories}}" range-key="name" value="{{categoryIndex}}" bindchange="onCategoryChange">
+        <view class="picker">{{categories[categoryIndex] ? categories[categoryIndex].name : '请选择分类'}}</view>
+      </picker>
+    </view>
+    <view class="form-section">
+      <text class="section-label">成色</text>
+      <picker mode="selector" range="{{conditions}}" value="{{conditionIndex}}" bindchange="onConditionChange">
+        <view class="picker">{{conditions[conditionIndex]}}</view>
+      </picker>
+    </view>
+    <view class="form-section">
+      <text class="section-label">校区</text>
+      <input class="form-input" placeholder="所在校区（选填）" value="{{campus}}" bindinput="onCampusInput" />
+    </view>
+    <button class="submit-btn" type="primary" disabled="{{submitting}}" bindtap="submit" loading="{{submitting}}">
+      {{submitting ? '发布中...' : '发布商品'}}
+    </button>
+  </view>
+</view>

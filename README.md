@@ -1,29 +1,26 @@
-# My Projects
+# My Projects Monorepo
 
-一个包含三个项目的合集仓库。
+Personal portfolio showcasing AI/LLM application development projects.
 
-## 项目列表
+## Projects
 
-### 1. 招聘管理与人才看板系统 (`2501060334-30/`)
+| Project | Description | Stack |
+|---------|-------------|-------|
+| [financial-management](./projects/financial-management) | Personal finance management system | Spring Boot 3 + Vue 3 + MySQL |
+| [recruitment](./projects/recruitment) | Recruitment & talent kanban system | Spring Boot 3 + Vue 3 + MySQL + Redis |
+| [ai-agent](./projects/ai-agent) | Intelligent code comment generation & optimization assistant | FastAPI + DeepSeek LLM + AST |
+| [school-business](./projects/school-business) | Campus second-hand trading WeChat mini program | WeChat Cloud + WXML |
+| [ai-agent-workflow](./projects/ai-agent-workflow) | AI Agent automation workflow system | Spring Boot 3 + Vue 3 + OpenAI API |
 
-基于 SpringBoot 3.5 + Vue 3 的全栈招聘管理系统，支持职位发布、简历筛选、面试安排和人才看板。
+## Structure
 
-- **后端**: JDK 21, SpringBoot 3.5, MyBatis-Plus, MySQL 8.0, Redis
-- **前端**: Vue 3, Element Plus, Pinia, ECharts
-- **状态**: 完整交付
-
-### 2. 代码注释智能生成与优化助手 (`ai agent/`)
-
-基于 AST 分析和 LLM 的代码注释自动生成工具，支持 Python 和 C++。
-
-- **后端**: Python FastAPI, DeepSeek API
-- **前端**: HTML + CSS + JavaScript
-- **功能**: AST 分析、LLM 语义生成、报告导出 (TXT/JSON/DOCX/PPT)
-
-### 3. 校园二手交易平台 (`school business/`)
-
-面向大学生的微信小程序二手交易平台，支持商品浏览、发布、收藏与私信。
-
-- **前端**: 微信小程序 (WXML + WXSS + JS)
-- **后端**: 微信云开发 (计划中)
-- **状态**: 需求分析与设计阶段
+```
+├── projects/
+│   ├── financial-management/    # 财务管理系统
+│   ├── recruitment/             # 招聘管理系统
+│   ├── ai-agent/                # AI 编程教学辅助工具
+│   ├── school-business/         # 校园二手交易小程序
+│   └── ai-agent-workflow/       # AI Agent 自动化工作流
+├── README.md
+└── .gitignore
+```

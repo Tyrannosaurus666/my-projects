@@ -44,3 +44,7 @@ Desktop.ini
 # Generated results
 uploads/
 results/
+
+# Old root-level dirs (moved to projects/)
+/Financial management/
+/ai-agent-workflow/
